@@ -9,7 +9,15 @@
 	"compatibility_date": "2025-12-25",
 	"observability": {
 		"enabled": true
-	}
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "qml_db",
+			"database_id": "4453c2e9-4f0f-4443-96b2-924330248105",
+			"remote": true
+		}
+	]
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
