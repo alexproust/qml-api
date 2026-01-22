@@ -258,7 +258,7 @@ function normalizeDate(v) {
   if (s === "") return { value: null };
 
   // dd/mm/yyyy (simple validation)
-  const re = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(\d{4})$/;
+  const re = /^(0[1-9]|[12][0-9]|3[01])\/([1-9]|1[0-2])\/(\d{4})$/;
   if (!re.test(s)) return { error: `Invalid date format: "${v}" (expected jj/mm/aaaa)` };
 
   return { value: s };
