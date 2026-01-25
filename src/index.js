@@ -1,17 +1,14 @@
 export default {
   async fetch(request, env) {
     try {
-      const url = new URL(request.url)
-
       if (request.method === "OPTIONS") {
         return new Response(null, { headers: corsHeaders() });
       }
 
-      // // Simple auth par token (recommandé)
-      // const auth = request.headers.get("Authorization") || "";
-      // if (auth !== `Bearer ${env.API_TOKEN}`) {
-      //   return json({ error: "Unauthorized" }, 401);
-      // }
+      const authErr = checkAuth(request, env);
+      if (authErr) return json(authErr, 401);
+
+      const url = new URL(request.url)
 
       // GET all costumes
       if (request.method === "GET" && url.pathname === "/costume") {
@@ -228,6 +225,14 @@ export default {
       return json({ error: "DB error", detail: err.message }, 500)
     }
   }
+}
+
+function checkAuth(request, env) {
+  const h = request.headers.get("Authorization") || "";
+  if (!h.startsWith("Bearer ")) return { error: "Unauthorized" };
+  const token = h.slice("Bearer ".length).trim();
+  if (!token || token !== env.API_TOKEN) return { error: "Unauthorized" };
+  return null;
 }
 
 function json(obj, status = 200) {
